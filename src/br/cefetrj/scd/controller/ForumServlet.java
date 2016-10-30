@@ -21,7 +21,7 @@ public class ForumServlet extends HttpServlet {
 	private UsuarioBeanRemote usuarioBeanRemote;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Usuario usuario = new Usuario("Luana", 21);
+		Usuario usuario = new Usuario("Luana", "teste", "l@h.com", true);
 		usuario = usuarioBeanRemote.insert(usuario);
 		response.getWriter().append("Served at: ").append(usuario.getId().toString());
 	}

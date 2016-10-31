@@ -7,5 +7,5 @@ import br.cefetrj.scd.entity.Usuario;
 @Remote
 public interface UsuarioBeanRemote {
 
-	public Usuario insert(Usuario user);
+	public String registrar(Usuario usuario);
 }

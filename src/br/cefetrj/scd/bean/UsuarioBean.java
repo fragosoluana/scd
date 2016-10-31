@@ -6,14 +6,15 @@ import javax.persistence.PersistenceContext;
 
 import br.cefetrj.scd.entity.Usuario;
 
-@Stateless
+@Stateless(mappedName="ejb/UsuarioBeanJNDI")
 public class UsuarioBean implements UsuarioBeanRemote {
 
 	@PersistenceContext(unitName="SCDPU")
     EntityManager manager;
 	
-	public Usuario insert(Usuario usuario){
+	public String registrar(Usuario usuario){
 		manager.persist(usuario);
-		return usuario;
+		
+		return "Usuario cadastrado";
 	}
 }

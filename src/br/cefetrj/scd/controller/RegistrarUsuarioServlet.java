@@ -12,18 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import br.cefetrj.scd.bean.UsuarioBeanRemote;
 import br.cefetrj.scd.entity.Usuario;
 
-@WebServlet("/forumServlet")
-public class ForumServlet extends HttpServlet {
-
-	private static final long serialVersionUID = 1L;
+@WebServlet("/registrar")
+public class RegistrarUsuarioServlet extends HttpServlet {
 	
 	@EJB
 	private UsuarioBeanRemote usuarioBeanRemote;
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Usuario usuario = new Usuario("Luana", "teste", "l@h.com", true);
-		usuario = usuarioBeanRemote.insert(usuario);
-		response.getWriter().append("Served at: ").append(usuario.getId().toString());
+		String msg = usuarioBeanRemote.registrar(new Usuario("Luana", "teste", "l@h.com", true));
+		response.getWriter().append(msg);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

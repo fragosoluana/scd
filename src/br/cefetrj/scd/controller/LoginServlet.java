@@ -10,20 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.scd.bean.UsuarioBeanRemote;
+import br.cefetrj.scd.entity.Usuario;
 
-@WebServlet("/registrar")
-public class RegistrarUsuarioServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private UsuarioBeanRemote usuarioBeanRemote;
-	
-	private static final long serialVersionUID = 1L;
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(usuarioBeanRemote.registrar("Renato", "teste", "r@h.com", true)) {
-			response.getWriter().append(String.valueOf("Cadastro realizado com sucesso"));
+		Usuario usuario = usuarioBeanRemote.login("r@h.com", "teste");
+
+		if(usuario != null) {
+			response.getWriter().append(String.valueOf("Login realizado com sucesso"));
 		} else {
-			response.getWriter().append(String.valueOf("Usuario já existe"));
+			response.getWriter().append(String.valueOf("Email ou senha estão incorretos"));
 		}
 	}
 

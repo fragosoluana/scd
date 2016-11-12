@@ -9,5 +9,6 @@ public interface TemaBeanRemote {
 	
 	public boolean registrar(String nome);
 	public Tema getTemaId(String id);
+	public Tema getTemaNome(String nome);
 
 }

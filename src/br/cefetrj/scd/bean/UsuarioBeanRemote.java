@@ -8,7 +8,7 @@ import br.cefetrj.scd.entity.Usuario;
 public interface UsuarioBeanRemote {
 
 	public boolean registrar(String nome, String senha, String email, boolean isAdmin);
-	public boolean isEmailExistente(String email);
+	public Usuario getUsuarioEmail(String email);
 	public Usuario login(String email, String senha);
 	public Usuario getUsuarioId(String id);
 }

@@ -9,27 +9,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.scd.bean.PerguntaBeanRemote;
+import br.cefetrj.scd.bean.RespostaBeanRemote;
 import br.cefetrj.scd.bean.UsuarioBeanRemote;
 
-@WebServlet("/registrar")
-public class RegistrarUsuarioServlet extends HttpServlet {
-	
-	@EJB
-	private UsuarioBeanRemote usuarioBeanRemote;
-	
+@WebServlet("/resposta/registrar")
+public class RegistrarRespostaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
+	@EJB
+	RespostaBeanRemote respostaBeanRemote;
+
+	@EJB
+	PerguntaBeanRemote perguntaBeanRemote;
+
+	@EJB
+	UsuarioBeanRemote usuarioBeanRemote;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(usuarioBeanRemote.registrar("Luana", "teste", "l@h.com", true)) {
-			response.getWriter().append(String.valueOf("Cadastro realizado com sucesso"));
+		if(respostaBeanRemote.registrar(usuarioBeanRemote.getUsuarioEmail("r@h.com"), 
+				perguntaBeanRemote.getPerguntaId("4"), "Procura no google, po")) {
+
+			response.getWriter().append(String.valueOf("Resposta realizada com sucesso"));
 		} else {
-			response.getWriter().append(String.valueOf("Usuario já existe"));
-		}
-		
-		if(usuarioBeanRemote.registrar("Renato", "teste2", "r@h.com", true)) {
-			response.getWriter().append(String.valueOf("Cadastro realizado com sucesso"));
-		} else {
-			response.getWriter().append(String.valueOf("Usuario já existe"));
+			response.getWriter().append(String.valueOf("Houve algum problema e a resposta não foi salva"));
 		}
 	}
 

@@ -14,7 +14,7 @@ public class UsuarioBean implements UsuarioBeanRemote {
 	private EntityManager manager;
 
 	public boolean registrar(String nome, String senha, String email, boolean isAdmin){
-		if(!isEmailExistente(email)) { 
+		if(getUsuarioEmail(email) == null) { 
 			manager.persist(new Usuario(nome, senha, email, isAdmin));
 			return true;
 		} else {
@@ -22,15 +22,14 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		}
 	}
 
-	public boolean isEmailExistente(String email) {
+	public Usuario getUsuarioEmail(String email) {
 		try {
-			manager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email")
+			return (Usuario) manager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email")
 					.setParameter("email", email)
 					.getSingleResult();
 
-			return true;
 		} catch (NoResultException e) {
-			return false;
+			return null;
 		}
 	}
 	

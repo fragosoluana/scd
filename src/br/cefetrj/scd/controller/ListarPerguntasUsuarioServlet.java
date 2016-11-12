@@ -10,29 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.cefetrj.scd.bean.PerguntaBeanRemote;
-import br.cefetrj.scd.bean.RespostaBeanRemote;
-import br.cefetrj.scd.bean.UsuarioBeanRemote;
+import br.cefetrj.scd.entity.Pergunta;
 
-@WebServlet("/resposta/registrar")
-public class RegistrarResposta extends HttpServlet {
+@WebServlet("/perfil/perguntas")
+public class ListarPerguntasUsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	RespostaBeanRemote respostaBeanRemote;
-
-	@EJB
-	PerguntaBeanRemote perguntaBeanRemote;
-
-	@EJB
-	UsuarioBeanRemote usuarioBeanRemote;
+	private PerguntaBeanRemote perguntaBeanRemote;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(respostaBeanRemote.registrar(usuarioBeanRemote.getUsuarioId("1"), 
-				perguntaBeanRemote.getPerguntaId("301"), "Procura no google, po")) {
-
-			response.getWriter().append(String.valueOf("Resposta realizada com sucesso"));
-		} else {
-			response.getWriter().append(String.valueOf("Houve algum problema e a resposta não foi salva"));
+		for (Pergunta pergunta : perguntaBeanRemote.getPerguntasUsuarioId("1")) {
+			if(pergunta == null) {
+				response.getWriter().append("Esse usuário ainda não fez nenhuma pergunta");
+			} else {
+				response.getWriter().append(pergunta.getDescricao());
+			}
 		}
 	}
 

@@ -9,29 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.cefetrj.scd.bean.PerguntaBeanRemote;
 import br.cefetrj.scd.bean.TemaBeanRemote;
-import br.cefetrj.scd.bean.UsuarioBeanRemote;
 
-@WebServlet("/pergunta/registrar")
-public class RegistrarPergunta extends HttpServlet {
+@WebServlet("/tema/registrar")
+public class RegistrarTemaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private PerguntaBeanRemote perguntaBeanRemote;
-	
-	@EJB
-	private UsuarioBeanRemote usuarioBeanRemote;
-	
-	@EJB
-	private TemaBeanRemote temaBeanRemote;
+	TemaBeanRemote temaBeanRemote;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(perguntaBeanRemote.registrar(usuarioBeanRemote.getUsuarioId("1"), 
-					temaBeanRemote.getTemaId("251"), "Qual é a fórmula de Baskaras?")) {
-			response.getWriter().append(String.valueOf("Pergunta realizada com sucesso"));
+		if(temaBeanRemote.registrar("Matematica")) {
+			response.getWriter().append(String.valueOf("Cadastro realizado com sucesso"));
 		} else {
-			response.getWriter().append(String.valueOf("Houve algum problema e a pergunta não foi salva"));
+			response.getWriter().append(String.valueOf("Tema já existe"));
 		}
 	}
 

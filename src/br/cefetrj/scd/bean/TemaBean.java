@@ -34,6 +34,17 @@ public class TemaBean implements TemaBeanRemote {
 		}
 	}
 	
+	public Tema getTemaNome(String nome) {
+		try {
+			return (Tema) manager.createQuery("SELECT t FROM Tema t WHERE t.nome = :nome")
+			.setParameter("nome", nome)
+			.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
 	public Tema getTemaId(String id) {
 		return manager.find(Tema.class, Long.parseLong(id));
 	}

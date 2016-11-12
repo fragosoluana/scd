@@ -9,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.cefetrj.scd.bean.TemaBeanRemote;
+import br.cefetrj.scd.bean.RespostaBeanRemote;
+import br.cefetrj.scd.entity.Resposta;
 
-@WebServlet("/tema/registrar")
-public class RegistrarTema extends HttpServlet {
+@WebServlet("/pergunta/respostas")
+public class ListarRespostasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	@EJB
-	TemaBeanRemote temaBeanRemote;
        
+	@EJB
+	private RespostaBeanRemote respostaBeanRemote;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(temaBeanRemote.registrar("Matematica")) {
-			response.getWriter().append(String.valueOf("Cadastro realizado com sucesso"));
-		} else {
-			response.getWriter().append(String.valueOf("Tema já existe"));
+		for (Resposta resposta : respostaBeanRemote.getRespostas("4")) {
+			response.getWriter().append(resposta.getDescricao());
 		}
 	}
 
